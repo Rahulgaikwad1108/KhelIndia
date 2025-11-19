@@ -80,6 +80,27 @@
                     </table>
                     <p class="hint">Your row is highlighted.</p>
                 </div>
+
+                <!-- NEW: Injury & Health status (Athlete view) -->
+                <div class="card">
+                    <h3>Injury & Health</h3>
+                    <p class="hint">View your current injuries and prevention tips.</p>
+                    <ul id="athleteInjuryList" class="simple-list"></ul>
+                    <p><strong>Prevention Notes:</strong></p>
+                    <p id="athletePreventionNotes" class="small-text"></p>
+                </div>
+
+                <!-- NEW: Career & Finance snapshot (Athlete view) -->
+                <div class="card">
+                    <h3>Career & Finance Snapshot</h3>
+                    <p><strong>Career Level:</strong> <span id="athleteCareerLevel"></span></p>
+                    <p><strong>Next Goal / Milestone:</strong></p>
+                    <p id="athleteNextGoal" class="small-text"></p>
+                    <hr style="margin: 0.6rem 0;">
+                    <p><strong>Monthly Stipend:</strong> <span id="athleteStipend"></span></p>
+                    <p><strong>Sponsorship:</strong> <span id="athleteSponsorship"></span></p>
+                    <p><strong>Total Monthly Support:</strong> <span id="athleteTotalSupport"></span></p>
+                </div>
             </div>
         </section>
 
@@ -112,7 +133,7 @@
                 </div>
 
                 <div class="card">
-                    <h3>Update Performance Points</h3>
+                    <h3>Update Performance & Notes</h3>
                     <form id="coachUpdateForm">
                         <label>
                             Select Athlete:
@@ -122,11 +143,72 @@
                             New Points:
                             <input type="number" id="coachPointsInput" min="0">
                         </label>
-                        <button type="submit">Update</button>
+
+                        <!-- NEW: performance metric tracking -->
+                        <label>
+                            Performance Metric (time / distance / score):
+                            <input type="text" id="coachPerformanceMetric" placeholder="e.g. 100m - 10.6s">
+                        </label>
+                        <label>
+                            Date:
+                            <input type="date" id="coachPerformanceDate">
+                        </label>
+                        <label>
+                            Notes:
+                            <input type="text" id="coachPerformanceNotes" placeholder="e.g. personal best, windy conditions">
+                        </label>
+
+                        <button type="submit">Save Performance</button>
                     </form>
+
+                    <h3 style="margin-top: 1.5rem;">Recent Performance History</h3>
+                    <ul id="coachPerformanceList" class="simple-list"></ul>
 
                     <h3 style="margin-top: 1.5rem;">Training Notes</h3>
                     <textarea id="trainingNotes" rows="5" placeholder="Write training plan / notes here..."></textarea>
+                </div>
+
+                <!-- NEW: Injury tracking for coaches -->
+                <div class="card">
+                    <h3>Injury Tracking</h3>
+                    <form id="coachInjuryForm">
+                        <label>
+                            Athlete:
+                            <select id="coachInjuryAthleteSelect"></select>
+                        </label>
+                        <label>
+                            Injury Type / Body Part:
+                            <input type="text" id="injuryTypeInput" placeholder="e.g. Hamstring strain">
+                        </label>
+                        <label>
+                            Severity:
+                            <select id="injurySeverityInput">
+                                <option value="Minor">Minor</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Severe">Severe</option>
+                            </select>
+                        </label>
+                        <label>
+                            Status:
+                            <select id="injuryStatusInput">
+                                <option value="Under Treatment">Under Treatment</option>
+                                <option value="Rehab">Rehab</option>
+                                <option value="Cleared">Cleared</option>
+                            </select>
+                        </label>
+                        <label>
+                            Start Date:
+                            <input type="date" id="injuryStartDateInput">
+                        </label>
+                        <label>
+                            Notes:
+                            <input type="text" id="injuryNotesInput" placeholder="e.g. Avoid sprinting for 2 weeks">
+                        </label>
+                        <button type="submit">Add / Update Injury</button>
+                    </form>
+
+                    <h3 style="margin-top: 1rem;">Current Injuries</h3>
+                    <ul id="coachInjuryList" class="simple-list"></ul>
                 </div>
             </div>
         </section>
@@ -158,6 +240,25 @@
                             Points:
                             <input type="number" id="adminPointsInput" required min="0">
                         </label>
+
+                        <!-- NEW: career & finance fields -->
+                        <label>
+                            Career Level:
+                            <input type="text" id="adminCareerLevelInput" placeholder="e.g. State / National / International">
+                        </label>
+                        <label>
+                            Next Goal / Milestone:
+                            <input type="text" id="adminNextGoalInput" placeholder="e.g. Qualify for Nationals">
+                        </label>
+                        <label>
+                            Monthly Stipend (₹):
+                            <input type="number" id="adminStipendInput" min="0" placeholder="e.g. 20000">
+                        </label>
+                        <label>
+                            Sponsorship (₹):
+                            <input type="number" id="adminSponsorshipInput" min="0" placeholder="e.g. 15000">
+                        </label>
+
                         <button type="submit">Add Athlete</button>
                     </form>
                 </div>
@@ -181,11 +282,18 @@
                                 <th>Sport</th>
                                 <th>Country</th>
                                 <th>Points</th>
+                                <!-- NEW: status & finance overview -->
+                                <th>Career Level</th>
+                                <th>Injury Status</th>
+                                <th>Monthly Support (₹)</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="adminAthleteTable"></tbody>
                     </table>
+
+                    <!-- NEW: total payout -->
+                    <p class="hint" id="totalSupportText"></p>
                 </div>
             </div>
         </section>
