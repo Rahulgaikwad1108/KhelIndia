@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KhelBharat - Athlete Records Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <h1>KhelBharat</h1>
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-target="athlete-panel">Athlete</button>
+            <button class="tab-btn" data-target="coach-panel">Coach</button>
+            <button class="tab-btn" data-target="admin-panel">Admin</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- ATHLETE PANEL -->
+        <section id="athlete-panel" class="panel active">
+            <h2>Athlete Dashboard</h2>
+
+            <div class="grid">
+                <!-- Athlete Profile -->
+                <div class="card">
+                    <h3>My Profile</h3>
+
+                    <!-- Login-like switcher -->
+                    <label>
+                        Login as Athlete:
+                        <select id="athleteLoginSelect"></select>
+                    </label>
+
+                    <div id="athleteProfileView">
+                        <p><strong>Name:</strong> <span id="athleteName"></span></p>
+                        <p><strong>Age:</strong> <span id="athleteAge"></span></p>
+                        <p><strong>Sport:</strong> <span id="athleteSport"></span></p>
+                        <p><strong>Country:</strong> <span id="athleteCountry"></span></p>
+                        <button id="editProfileBtn">Edit Profile</button>
+                    </div>
+
+                    <form id="athleteProfileForm" class="hidden">
+                        <label>
+                            Name:
+                            <input type="text" id="inputName">
+                        </label>
+                        <label>
+                            Age:
+                            <input type="number" id="inputAge">
+                        </label>
+                        <label>
+                            Sport:
+                            <input type="text" id="inputSport">
+                        </label>
+                        <label>
+                            Country:
+                            <input type="text" id="inputCountry">
+                        </label>
+                        <div class="form-actions">
+                            <button type="submit">Save</button>
+                            <button type="button" id="cancelEditBtn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Ranking Table (Athlete View) -->
+                <div class="card">
+                    <h3>Overall Ranking</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Sport</th>
+                                <th>Country</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="athleteRankingTable"></tbody>
+                    </table>
+                    <p class="hint">Your row is highlighted.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COACH PANEL -->
+        <section id="coach-panel" class="panel">
+            <h2>Coach Dashboard</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Athlete Rankings</h3>
+
+                    <!-- Filter by sport (Coach) -->
+                    <div class="toolbar">
+                        <label>
+                            Filter by sport:
+                            <input type="text" id="coachSportFilter" placeholder="e.g. 100m, Long Jump">
+                        </label>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Sport</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="coachRankingTable"></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>Update Performance Points</h3>
+                    <form id="coachUpdateForm">
+                        <label>
+                            Select Athlete:
+                            <select id="coachAthleteSelect"></select>
+                        </label>
+                        <label>
+                            New Points:
+                            <input type="number" id="coachPointsInput" min="0">
+                        </label>
+                        <button type="submit">Update</button>
+                    </form>
+
+                    <h3 style="margin-top: 1.5rem;">Training Notes</h3>
+                    <textarea id="trainingNotes" rows="5" placeholder="Write training plan / notes here..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN PANEL -->
+        <section id="admin-panel" class="panel">
+            <h2>Admin Panel</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Add New Athlete</h3>
+                    <form id="adminAddForm">
+                        <label>
+                            Name:
+                            <input type="text" id="adminNameInput" required>
+                        </label>
+                        <label>
+                            Age:
+                            <input type="number" id="adminAgeInput" required min="10">
+                        </label>
+                        <label>
+                            Sport:
+                            <input type="text" id="adminSportInput" required>
+                        </label>
+                        <label>
+                            Country:
+                            <input type="text" id="adminCountryInput" required>
+                        </label>
+                        <label>
+                            Points:
+                            <input type="number" id="adminPointsInput" required min="0">
+                        </label>
+                        <button type="submit">Add Athlete</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>All Athletes</h3>
+
+                    <!-- Filter by sport (Admin) -->
+                    <div class="toolbar">
+                        <label>
+                            Filter by sport:
+                            <input type="text" id="adminSportFilter" placeholder="e.g. High Jump">
+                        </label>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Sport</th>
+                                <th>Country</th>
+                                <th>Points</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminAthleteTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>KhelBharat &copy; 2025</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
