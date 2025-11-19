@@ -8,14 +8,38 @@
 <body>
     <header class="topbar">
         <h1>KhelBharat</h1>
-        <nav class="nav-tabs">
-            <button class="tab-btn active" data-target="athlete-panel">Athlete</button>
-            <button class="tab-btn" data-target="coach-panel">Coach</button>
-            <button class="tab-btn" data-target="admin-panel">Admin</button>
-        </nav>
+        <div class="topbar-right">
+            <div class="theme-toggle">
+                <button id="themeToggleBtn">🌙 Dark</button>
+            </div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-target="athlete-panel">Athlete</button>
+                <button class="tab-btn" data-target="coach-panel">Coach</button>
+                <button class="tab-btn" data-target="admin-panel">Admin</button>
+            </nav>
+        </div>
     </header>
 
     <main class="container">
+        <!-- GLOBAL SEARCH + COMPARE TOOLBAR -->
+        <div class="toolbar global-toolbar">
+            <input
+                type="text"
+                id="globalSearchInput"
+                placeholder="Search athletes by name, sport, or country..."
+            >
+            <div class="compare-controls">
+                <label>
+                    <select id="compareSelectA"></select>
+                </label>
+                <span>vs</span>
+                <label>
+                    <select id="compareSelectB"></select>
+                </label>
+                <button id="compareBtn">Compare</button>
+            </div>
+        </div>
+
         <!-- ATHLETE PANEL -->
         <section id="athlete-panel" class="panel active">
             <h2>Athlete Dashboard</h2>
@@ -31,12 +55,29 @@
                         <select id="athleteLoginSelect"></select>
                     </label>
 
+                    <!-- Avatar + upload -->
+                    <div class="avatar-section">
+                        <div id="athleteAvatar" class="avatar">A</div>
+                        <label class="avatar-upload-label">
+                            Profile Photo:
+                            <input type="file" id="avatarInput" accept="image/*">
+                        </label>
+                    </div>
+
                     <div id="athleteProfileView">
                         <p><strong>Name:</strong> <span id="athleteName"></span></p>
                         <p><strong>Age:</strong> <span id="athleteAge"></span></p>
                         <p><strong>Sport:</strong> <span id="athleteSport"></span></p>
                         <p><strong>Country:</strong> <span id="athleteCountry"></span></p>
-                        <button id="editProfileBtn">Edit Profile</button>
+                        <p><strong>Gender:</strong> <span id="athleteGender"></span></p>
+
+                        <p style="margin-top:0.6rem;"><strong>Profile Completion:</strong></p>
+                        <div class="completion-bar-wrapper">
+                            <div id="completionBar" class="completion-bar"></div>
+                        </div>
+                        <p class="small-text" id="completionText"></p>
+
+                        <button id="editProfileBtn" style="margin-top:0.75rem;">Edit Profile</button>
                     </div>
 
                     <form id="athleteProfileForm" class="hidden">
@@ -55,6 +96,15 @@
                         <label>
                             Country:
                             <input type="text" id="inputCountry">
+                        </label>
+                        <label>
+                            Gender:
+                            <select id="inputGender">
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </label>
                         <div class="form-actions">
                             <button type="submit">Save</button>
@@ -78,10 +128,10 @@
                         </thead>
                         <tbody id="athleteRankingTable"></tbody>
                     </table>
-                    <p class="hint">Your row is highlighted.</p>
+                    <p class="hint">Click a row to view full details. Your row is highlighted.</p>
                 </div>
 
-                <!-- NEW: Injury & Health status (Athlete view) -->
+                <!-- Injury & Health (Athlete view) -->
                 <div class="card">
                     <h3>Injury & Health</h3>
                     <p class="hint">View your current injuries and prevention tips.</p>
@@ -90,7 +140,7 @@
                     <p id="athletePreventionNotes" class="small-text"></p>
                 </div>
 
-                <!-- NEW: Career & Finance snapshot (Athlete view) -->
+                <!-- Career & Finance snapshot (Athlete view) -->
                 <div class="card">
                     <h3>Career & Finance Snapshot</h3>
                     <p><strong>Career Level:</strong> <span id="athleteCareerLevel"></span></p>
@@ -143,8 +193,6 @@
                             New Points:
                             <input type="number" id="coachPointsInput" min="0">
                         </label>
-
-                        <!-- NEW: performance metric tracking -->
                         <label>
                             Performance Metric (time / distance / score):
                             <input type="text" id="coachPerformanceMetric" placeholder="e.g. 100m - 10.6s">
@@ -168,7 +216,6 @@
                     <textarea id="trainingNotes" rows="5" placeholder="Write training plan / notes here..."></textarea>
                 </div>
 
-                <!-- NEW: Injury tracking for coaches -->
                 <div class="card">
                     <h3>Injury Tracking</h3>
                     <form id="coachInjuryForm">
@@ -237,11 +284,19 @@
                             <input type="text" id="adminCountryInput" required>
                         </label>
                         <label>
+                            Gender:
+                            <select id="adminGenderInput" required>
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </label>
+                        <label>
                             Points:
                             <input type="number" id="adminPointsInput" required min="0">
                         </label>
 
-                        <!-- NEW: career & finance fields -->
                         <label>
                             Career Level:
                             <input type="text" id="adminCareerLevelInput" placeholder="e.g. State / National / International">
@@ -266,11 +321,19 @@
                 <div class="card">
                     <h3>All Athletes</h3>
 
-                    <!-- Filter by sport (Admin) -->
                     <div class="toolbar">
                         <label>
                             Filter by sport:
                             <input type="text" id="adminSportFilter" placeholder="e.g. High Jump">
+                        </label>
+                        <label>
+                            Filter by gender:
+                            <select id="adminGenderFilter">
+                                <option value="All">All</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </label>
                     </div>
 
@@ -281,8 +344,8 @@
                                 <th>Name</th>
                                 <th>Sport</th>
                                 <th>Country</th>
+                                <th>Gender</th>
                                 <th>Points</th>
-                                <!-- NEW: status & finance overview -->
                                 <th>Career Level</th>
                                 <th>Injury Status</th>
                                 <th>Monthly Support (₹)</th>
@@ -292,8 +355,8 @@
                         <tbody id="adminAthleteTable"></tbody>
                     </table>
 
-                    <!-- NEW: total payout -->
                     <p class="hint" id="totalSupportText"></p>
+                    <p class="hint" id="genderStatsText"></p>
                 </div>
             </div>
         </section>
@@ -302,6 +365,74 @@
     <footer class="footer">
         <p>KhelBharat &copy; 2025</p>
     </footer>
+
+    <!-- ATHLETE DETAIL DRAWER -->
+    <div id="athleteDrawer" class="drawer hidden">
+        <div class="drawer-backdrop"></div>
+        <div class="drawer-content">
+            <button id="drawerCloseBtn" class="drawer-close">&times;</button>
+            <h3 id="drawerName"></h3>
+            <p><strong>Sport:</strong> <span id="drawerSport"></span></p>
+            <p><strong>Country:</strong> <span id="drawerCountry"></span></p>
+            <p><strong>Age:</strong> <span id="drawerAge"></span></p>
+            <p><strong>Gender:</strong> <span id="drawerGender"></span></p>
+            <p><strong>Points:</strong> <span id="drawerPoints"></span></p>
+            <hr>
+            <h4>Career</h4>
+            <p><strong>Level:</strong> <span id="drawerCareerLevel"></span></p>
+            <p><strong>Next Goal:</strong> <span id="drawerNextGoal"></span></p>
+            <hr>
+            <h4>Financial Overview</h4>
+            <p><strong>Stipend:</strong> <span id="drawerStipend"></span></p>
+            <p><strong>Sponsorship:</strong> <span id="drawerSponsorship"></span></p>
+            <p><strong>Total Monthly Support:</strong> <span id="drawerTotalSupport"></span></p>
+            <hr>
+            <h4>Current Injuries</h4>
+            <ul id="drawerInjuryList" class="simple-list"></ul>
+            <h4>Recent Performances</h4>
+            <ul id="drawerPerformanceList" class="simple-list"></ul>
+        </div>
+    </div>
+
+    <!-- COMPARE TWO ATHLETES POPUP -->
+    <div id="compareModal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button id="compareCloseBtn" class="modal-close">&times;</button>
+            <h3>Compare Athletes</h3>
+            <div class="compare-grid">
+                <div>
+                    <h4 id="compareNameA"></h4>
+                    <p><strong>Sport:</strong> <span id="compareSportA"></span></p>
+                    <p><strong>Country:</strong> <span id="compareCountryA"></span></p>
+                    <p><strong>Age:</strong> <span id="compareAgeA"></span></p>
+                    <p><strong>Gender:</strong> <span id="compareGenderA"></span></p>
+                    <p><strong>Points:</strong> <span id="comparePointsA"></span></p>
+                    <p><strong>Career Level:</strong> <span id="compareCareerLevelA"></span></p>
+                    <p><strong>Monthly Support:</strong> <span id="compareTotalSupportA"></span></p>
+                    <p><strong>Injury Status:</strong> <span id="compareInjurySummaryA"></span></p>
+                    <p><strong>Last Performance:</strong> <span id="compareLastPerformanceA"></span></p>
+                </div>
+                <div>
+                    <h4 id="compareNameB"></h4>
+                    <p><strong>Sport:</strong> <span id="compareSportB"></span></p>
+                    <p><strong>Country:</strong> <span id="compareCountryB"></span></p>
+                    <p><strong>Age:</strong> <span id="compareAgeB"></span></p>
+                    <p><strong>Gender:</strong> <span id="compareGenderB"></span></p>
+                    <p><strong>Points:</strong> <span id="comparePointsB"></span></p>
+                    <p><strong>Career Level:</strong> <span id="compareCareerLevelB"></span></p>
+                    <p><strong>Monthly Support:</strong> <span id="compareTotalSupportB"></span></p>
+                    <p><strong>Injury Status:</strong> <span id="compareInjurySummaryB"></span></p>
+                    <p><strong>Last Performance:</strong> <span id="compareLastPerformanceB"></span></p>
+                </div>
+            </div>
+            <hr>
+            <p class="small-text" id="compareSummaryText"></p>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast hidden"></div>
 
     <script src="script.js"></script>
 </body>
